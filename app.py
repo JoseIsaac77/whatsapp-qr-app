@@ -1,8 +1,9 @@
+import os  # <- IMPORTANTE para Render
 from flask import Flask, render_template_string
 import qrcode
 import io
 import base64
-import os  # <- IMPORTANTE para Render
+
 
 app = Flask(__name__)
 
