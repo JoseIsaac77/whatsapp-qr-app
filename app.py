@@ -2,6 +2,7 @@ from flask import Flask, render_template_string
 import qrcode
 import io
 import base64
+import os  # <- IMPORTANTE para Render
 
 app = Flask(__name__)
 
@@ -16,11 +17,14 @@ def qr_whatsapp():
     img_str = base64.b64encode(buffer.getvalue()).decode()
 
     html = '''
-    <h1>Escaneá el QR para abrir WhatsApp</h1>
-    <img src="data:image/png;base64,{{img_str}}" alt="QR WhatsApp">
+    <h1 style="font-family: Arial; text-align:center;">Escaneá el QR para abrir WhatsApp</h1>
+    <div style="text-align:center;">
+        <img src="data:image/png;base64,{{img_str}}" alt="QR WhatsApp" style="width:300px;">
+    </div>
     '''
 
     return render_template_string(html, img_str=img_str)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))  # Render define el puerto en una variable
+    app.run(host='0.0.0.0', port=port)
